@@ -1,4 +1,6 @@
+import { useFormik } from "formik";
 import React, { Fragment, useEffect, useState } from "react";
+import { monitorSchema } from "./Schema";
 
 export default function CreateFrom({
   openPopForm,
@@ -25,17 +27,17 @@ export default function CreateFrom({
     setFormData(initialState);
   }
 
-  function handleOnChange(event) {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    getFormData(formData);
-    setShow(!show);
-    setOpenPopFormState(!openPopForm);
-    setFormData(initialState);
-  }
+  const { handleChange, handleBlur, values, handleSubmit, errors, touched } =
+    useFormik({
+      initialValues: initialState,
+      validationSchema: monitorSchema,
+      onSubmit: (value, action) => {
+        getFormData(value);
+        setShow(!show);
+        setOpenPopFormState(!openPopForm);
+        action.resetForm();
+      },
+    });
 
   return (
     <Fragment>
@@ -46,7 +48,10 @@ export default function CreateFrom({
         tabIndex="-1"
         aria-hidden="true"
       >
-        <div className="modal-dialog  modal-dialog-centered">
+        <form
+          className="modal-dialog  modal-dialog-centered"
+          onSubmit={handleSubmit}
+        >
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
@@ -68,11 +73,16 @@ export default function CreateFrom({
                   </label>
                   <input
                     type="text"
-                    className="form-control"
+                    className={`form-control ${
+                      errors.message && touched.message
+                        ? "border border-danger"
+                        : ""
+                    }`}
                     name="message"
                     placeholder="Message"
-                    value={formData.message}
-                    onChange={handleOnChange}
+                    value={values.message}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
                 </div>
                 <div className="col-12">
@@ -81,11 +91,16 @@ export default function CreateFrom({
                   </label>
                   <input
                     type="text"
-                    className="form-control"
+                    className={`form-control ${
+                      errors.name && touched.name
+                        ? "border border-danger"
+                        : ""
+                    }`}
                     name="name"
                     placeholder="Name"
-                    value={formData.name}
-                    onChange={handleOnChange}
+                    value={values.name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
                 </div>
                 <div className="col-12">
@@ -94,11 +109,16 @@ export default function CreateFrom({
                   </label>
                   <input
                     type="text"
-                    className="form-control"
+                    className={`form-control ${
+                      errors.type && touched.type
+                        ? "border border-danger"
+                        : ""
+                    }`}
                     name="type"
                     placeholder="Type"
-                    value={formData.type}
-                    onChange={handleOnChange}
+                    value={values.type}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
                 </div>
                 <div className="col-12">
@@ -106,11 +126,16 @@ export default function CreateFrom({
                     Query
                   </label>
                   <textarea
-                    className="form-control"
+                    className={`form-control ${
+                      errors.query && touched.query
+                        ? "border border-danger"
+                        : ""
+                    }`}
                     name="query"
                     placeholder="Query"
-                    value={formData.query}
-                    onChange={handleOnChange}
+                    value={values.query}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
                 </div>
               </div>
@@ -133,7 +158,7 @@ export default function CreateFrom({
               </button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </Fragment>
   );
