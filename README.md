@@ -53,4 +53,4 @@ Once the app is running, you can
 
 ## Deployment In Heroku
 
-[URL](#https://react-datadog-4c3649acfd98.herokuapp.com/) 
+[React-Datadog Integration App](https://react-datadog-4c3649acfd98.herokuapp.com/)
