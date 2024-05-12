@@ -8,8 +8,6 @@ This project is a web application built using React that integrates with Datadog
 - [Setup](#setup)
 - [Usage](#usage)
 - [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -45,10 +43,14 @@ To run this project locally, follow these steps:
    npm start
    ```
 
-# React-Datadog Integration
+## React-Datadog Integration
 
 Once the app is running, you can
 
 - [x] 1. View monitor and metric data fetched from the Datadog API.
 - [x] 2. Click the "Create New Monitor" button to open a form and submit a new monitor.
 - [x] 3. Configure a webhook in Datadog to send monitor event updates to the app.
+
+## Deployment In Heroku
+
+
